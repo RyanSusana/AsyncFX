@@ -33,10 +33,10 @@ AsyncTasks.newTypedTask(Integer.class, String.class)
 //After the inBackground call. Runs in a JavaFX thread.
 .after(result -> System.out.println(String.format("Background process ran in %s", result)))
 
-typedTask
+//Execute the task with input
 .execute(10, 100)
 
-typedTask
+//Block the current thread until the task has been executed
 .andWait();
 
 ```
@@ -62,10 +62,10 @@ AsyncTasks.newTypedTask<Int, String>()
 //After the inBackground call. Runs in a JavaFX thread.
 .after { result -> println("Background process ran in %s".format(result)) }
 
-typedTask
+//Execute the task with input
 .execute(10, 100)
 
-typedTask
+//Block the current thread until the task has been executed
 .andWait()
 ```
 
