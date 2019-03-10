@@ -25,7 +25,7 @@ AsyncTasks.newTask(Integer.class, String.class)
 .after(result -> System.out.println(String.format("Background process ran in %s", result)))
 
 //Execute the task here you can provide optional input to the inBackground call
-.execute(100, 10)
+.execute(10, 100)
 
 //Call this to block until this task ends
 .andWait();
@@ -54,7 +54,7 @@ AsyncTasks.newTask<Int, String>()
 .after { result -> println("Background process ran in %s".format(result)) }
 
 //Execute the task here you can provide optional input to the inBackground call
-.execute(100, 10)
+.execute(10, 100)
 
 //Call this to block until this task ends
 .andWait()
