@@ -131,4 +131,21 @@ class AsyncKotlinTest {
         assertEquals(amountOfTasks, atomicInteger.get())
 
     }
+
+    @Test
+    internal fun testCoolSyntax() {
+
+        val typedTask = typedTask<Int, String> {
+            before { println("This will be executed before") }
+
+            inBackground { inputIntegerArray ->
+                val randomInt = Random().nextInt(inputIntegerArray[0] * inputIntegerArray[1]).toLong()
+                Thread.sleep(randomInt)
+                randomInt.toString() + "ms"
+            }
+            after { result -> println("Background process ran in %s".format(result)) }
+        }
+
+        typedTask.execute().andWait()
+    }
 }

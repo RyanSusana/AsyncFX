@@ -8,7 +8,7 @@ AsyncFX is a library for Java and Kotlin aimed at simplifying the development of
 <dependency>
     <groupId>com.ryansusana.asyncfx</groupId>
     <artifactId>asyncfx</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 </dependency>
 ```
 # Basic Usage
@@ -42,7 +42,7 @@ typedTask
 ```
 
 ## Kotlin
-
+This is the Kotlin equivalent to the above Java code.
 ```kotlin
 AsyncTasks.newTypedTask<Int, String>()
 
@@ -53,7 +53,7 @@ AsyncTasks.newTypedTask<Int, String>()
 .inBackground { inputIntegerArray ->
 
     //inputIntegerArray comes from .execute(Integer... inputIntegerArray) call
-    val randomInt = Random().nextInt(inputIntegerArray[0] * inputIntegerArray[1])
+    val randomInt = Random().nextInt(inputIntegerArray[0] * inputIntegerArray[1]).toLong()
 
     Thread.sleep(randomInt)
     randomInt.toString() + "ms"
@@ -67,4 +67,19 @@ typedTask
 
 typedTask
 .andWait()
+```
+
+## Kotlin (simplified)
+In version 0.0.2 the new Kotlin Builder API came out. It significantly improved the creation of Kotlin Tasks.
+```kotlin
+typedTask<Int, String> {
+    before { println("This will be executed before") }
+
+    inBackground { inputIntegerArray ->
+        val randomInt = Random().nextInt(inputIntegerArray[0] * inputIntegerArray[1]).toLong()
+        Thread.sleep(randomInt)
+        randomInt.toString() + "ms"
+    }
+    after { result -> println("Background process ran in %s".format(result)) }
+}.execute().andWait()
 ```
