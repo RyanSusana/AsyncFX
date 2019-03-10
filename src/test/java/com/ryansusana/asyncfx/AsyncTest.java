@@ -15,7 +15,7 @@ public class AsyncTest {
 
     @Test
     void testSyntax() throws InterruptedException {
-        AsyncTasks.newTask(Integer.class, String.class)
+        AsyncTasks.newTypedTask(Integer.class, String.class)
 
                 //Happens before async call and is blocking on the JavaFX thread.
                 .before(() -> System.out.println("This will be executed before"))
@@ -33,10 +33,10 @@ public class AsyncTest {
                 //After the inBackground call. Runs in a JavaFX thread.
                 .after(result -> System.out.println(String.format("Background process ran in %s", result)))
 
-                //Execute the task here you can provide optional input to the inBackground call
+                //Execute the typedTask here you can provide optional input to the inBackground call
                 .execute(100, 10)
 
-                //Call this to block until this task ends
+                //Call this to block until this typedTask ends
                 .andWait();
     }
 }

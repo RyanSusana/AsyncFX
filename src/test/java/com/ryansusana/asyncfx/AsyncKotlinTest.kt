@@ -1,6 +1,7 @@
 package com.ryansusana.asyncfx
 
-import com.ryansusana.asyncfx.AsyncTasks.*
+import com.ryansusana.asyncfx.AsyncTasks.newPool
+import com.ryansusana.asyncfx.AsyncTasks.newTypedTask
 import org.junit.jupiter.api.Test
 import org.testfx.api.FxToolkit
 import java.util.*
@@ -13,11 +14,12 @@ import kotlin.test.assertTrue
 
 class AsyncKotlinTest {
 
-
     @Test
     internal fun testSyntaxWithComments() {
         FxToolkit.registerPrimaryStage()
-        newTask<Int, String>()
+
+
+        newTypedTask<Int, String>()
 
                 //Happens before async call and is blocking on the JavaFX thread.
                 .before { println("This will be executed before") }
@@ -35,17 +37,18 @@ class AsyncKotlinTest {
                 //After the inBackground call. Runs in a JavaFX thread.
                 .after { result -> println("Background process ran in %s".format(result)) }
 
-                //Execute the task here you can provide optional input to the inBackground call
+                //Execute the typedTask here you can provide optional input to the inBackground call
                 .execute(100, 10)
 
-                //Call this to block until this task ends
+                //Call this to block until this typedTask ends
                 .andWait()
     }
 
     @Test
     internal fun testSyntaxWithoutComments() {
         FxToolkit.registerPrimaryStage()
-        newTask<Int, String>()
+        newTypedTask<Int, String>()
+
                 .before { println("This will be executed before") }
                 .inBackground { inputIntegerArray ->
 
@@ -64,7 +67,7 @@ class AsyncKotlinTest {
         FxToolkit.registerPrimaryStage()
         val atomicBoolean = AtomicBoolean(false)
 
-        newTask<Int, Boolean>()
+        newTypedTask<Int, Boolean>()
                 .inBackground {
                     Thread.sleep(200)
                     true
@@ -84,7 +87,7 @@ class AsyncKotlinTest {
         FxToolkit.registerPrimaryStage()
         val atomicBoolean = AtomicBoolean(false)
 
-        newTask<Int, Boolean>()
+        newTypedTask<Int, Boolean>()
                 .inBackground {
                     Thread.sleep(200)
                     true
@@ -103,20 +106,31 @@ class AsyncKotlinTest {
     internal fun testAsyncPool() {
         FxToolkit.registerPrimaryStage()
 
-        val asyncTaskPool = newGenericPool()
+        val asyncTaskPool = newPool()
         val atomicInteger = AtomicInteger(0)
         val amountOfTasks = 20
         val durationPerTask = 100L
 
+        pool {
+            task {
+            }
+            task {
+            }
+            task {
+
+            }
+        }
+
         for (i in 1..amountOfTasks) {
             asyncTaskPool.addTask(
-                    newGenericTask()
-                            .inBackground {
-                                Thread.sleep(durationPerTask)
-                                atomicInteger.getAndAdd(1)
-                            }
-                            .create()
+                    task {
+                        inBackground {
+                            Thread.sleep(durationPerTask)
+                            atomicInteger.getAndAdd(1)
+                        }
+                    }
             )
+
         }
 
         // It needs to execute in at least half of durationPerTask * amountOfTasks.

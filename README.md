@@ -15,7 +15,7 @@ AsyncFX is a library for Java and Kotlin aimed at simplifying the development of
 
 ## Java
 ```java
-AsyncTasks.newTask(Integer.class, String.class)
+AsyncTasks.newTypedTask(Integer.class, String.class)
 
 //Happens before async call and is blocking on the JavaFX thread.
 .before(() -> System.out.println("This will be executed before"))
@@ -33,10 +33,10 @@ AsyncTasks.newTask(Integer.class, String.class)
 //After the inBackground call. Runs in a JavaFX thread.
 .after(result -> System.out.println(String.format("Background process ran in %s", result)))
 
-//Execute the task here you can provide optional input to the inBackground call
+typedTask
 .execute(10, 100)
 
-//Call this to block until this task ends
+typedTask
 .andWait();
 
 ```
@@ -44,7 +44,7 @@ AsyncTasks.newTask(Integer.class, String.class)
 ## Kotlin
 
 ```kotlin
-AsyncTasks.newTask<Int, String>()
+AsyncTasks.newTypedTask<Int, String>()
 
 //Happens before async call and is blocking on the JavaFX thread.
 .before { println("This will be executed before") }
@@ -62,9 +62,9 @@ AsyncTasks.newTask<Int, String>()
 //After the inBackground call. Runs in a JavaFX thread.
 .after { result -> println("Background process ran in %s".format(result)) }
 
-//Execute the task here you can provide optional input to the inBackground call
+typedTask
 .execute(10, 100)
 
-//Call this to block until this task ends
+typedTask
 .andWait()
 ```
