@@ -31,7 +31,7 @@ public class AsyncTaskBuilder<T1, T2, T3> {
 
 
     public AsyncTask<T1, T2, T3> create() {
-        return new AsyncTask<>() {
+        return new AsyncTask<T1, T2, T3>() {
             @Override
             public void before() {
                 before.before();
