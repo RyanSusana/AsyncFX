@@ -1,6 +1,6 @@
 package com.ryansusana.asyncfx;
 
-public interface After<T3>{
+public interface After<T2>{
 
-    void after(T3 params);
+    void after(T2 params);
 }

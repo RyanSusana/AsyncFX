@@ -4,25 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AsyncTaskPool<T1, T2, T3> {
-    private final List<AsyncTask<T1, T2, T3>> tasksToExecute;
+public class AsyncTaskPool<T1,  T2> {
+    private final List<AsyncTask<T1,  T2>> tasksToExecute;
 
     public AsyncTaskPool() {
         tasksToExecute = new ArrayList<>();
     }
 
-    public AsyncTaskPool<T1, T2, T3> addTask(AsyncTask<T1, T2, T3> task) {
+    public AsyncTaskPool<T1,  T2> addTask(AsyncTask<T1,  T2> task) {
         tasksToExecute.add(task);
         return this;
     }
 
-    public ExecutedAsyncTask<T1, T2, List<T3>> execute(T1... params) {
+    public ExecutedAsyncTask<T1,  List<T2>> execute(T1... params) {
         return toTaskBuilder().execute(params);
     }
 
 
-    public AsyncTaskBuilder<T1, T2, List<T3>> toTaskBuilder() {
-        return AsyncTasks.<T1, T2, List<T3>>newTask()
+    public AsyncTaskBuilder<T1,  List<T2>> toTaskBuilder() {
+        return AsyncTasks.<T1,  List<T2>>newTask()
                 .inBackground(params -> tasksToExecute
                         .stream()
 

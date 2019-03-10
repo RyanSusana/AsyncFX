@@ -4,7 +4,7 @@ import javafx.application.Platform;
 
 import java.util.concurrent.CountDownLatch;
 
-public abstract class AsyncTask<T1, T2, T3> {
+public abstract class AsyncTask<T1, T2> {
 
     private boolean daemon = true;
 
@@ -12,18 +12,21 @@ public abstract class AsyncTask<T1, T2, T3> {
 
     protected abstract void before();
 
-    protected abstract T3 during(T1... params);
+    protected abstract T2 during(T1... params) throws InterruptedException;
 
-    protected abstract void after(T3 params);
+    protected abstract void after(T2 params);
 
 
     CountDownLatch countDownLatch = new CountDownLatch(1);
-    T3 param = null;
+    T2 param = null;
 
 
     private final Thread backgroundThread = new Thread(() -> {
         try {
             param = during(params);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new AsyncException("Background thread has been interrupted", e);
         } finally {
             countDownLatch.countDown();
         }
@@ -31,7 +34,7 @@ public abstract class AsyncTask<T1, T2, T3> {
         Platform.runLater(() -> after(param));
     });
 
-    public ExecutedAsyncTask<T1, T2, T3> execute(final T1... params) {
+    public ExecutedAsyncTask<T1,  T2> execute(final T1... params) {
         this.params = params;
         Platform.runLater(() -> {
 

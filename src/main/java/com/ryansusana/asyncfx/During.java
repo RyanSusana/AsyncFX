@@ -1,7 +1,7 @@
 package com.ryansusana.asyncfx;
 
-public interface During<T1, T3> {
+public interface During<T1, T2> {
 
-    T3 during(T1... params) ;
+    T2 during(T1... params) throws InterruptedException;
 
 }
