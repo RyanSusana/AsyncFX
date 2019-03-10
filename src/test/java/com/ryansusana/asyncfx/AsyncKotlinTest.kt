@@ -5,13 +5,15 @@ import javafx.embed.swing.JFXPanel
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.testfx.api.FxRobot
+import org.testfx.api.FxToolkit
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class AsyncKotlinTest {
+class AsyncKotlinTest  : FxRobot() {
 
 
     @BeforeAll
@@ -22,7 +24,7 @@ class AsyncKotlinTest {
 
     @Test
     internal fun testSyntaxWithComments() {
-        JFXPanel()
+        FxToolkit.registerPrimaryStage()
         newTask<Int, String>()
 
                 //Happens before async call and is blocking on the JavaFX thread.
@@ -50,7 +52,7 @@ class AsyncKotlinTest {
 
     @Test
     internal fun testSyntaxWithoutComments() {
-        JFXPanel()
+        FxToolkit.registerPrimaryStage()
         newTask<Int, String>()
                 .before { println("This will be executed before") }
                 .inBackground { inputIntegerArray ->
@@ -67,7 +69,7 @@ class AsyncKotlinTest {
 
     @Test
     internal fun testNonBlocking() {
-        JFXPanel()
+        FxToolkit.registerPrimaryStage()
         val atomicBoolean = AtomicBoolean(false)
 
         newTask<Int, Boolean>()
@@ -87,7 +89,7 @@ class AsyncKotlinTest {
 
     @Test
     internal fun testWaitOnResult() {
-        JFXPanel()
+        FxToolkit.registerPrimaryStage()
         val atomicBoolean = AtomicBoolean(false)
 
         newTask<Int, Boolean>()
