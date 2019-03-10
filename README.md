@@ -3,7 +3,14 @@
 # About AsyncFX
 AsyncFX is a library for Java and Kotlin aimed at simplifying the development of asynchronous calls in JavaFX.
 
-
+# Download
+```xml
+<dependency>
+    <groupId>com.ryansusana.asyncfx</groupId>
+    <artifactId>asyncfx</artifactId>
+    <version>0.0.1</version>
+</dependency>
+```
 # Basic Usage
 
 ## Java
