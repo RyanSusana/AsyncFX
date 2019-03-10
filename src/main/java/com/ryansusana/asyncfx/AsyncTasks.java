@@ -14,6 +14,10 @@ public class AsyncTasks {
         return new AsyncTaskBuilder<>();
     }
 
+    public static AsyncTaskBuilder newGenericTask() {
+        return new AsyncTaskBuilder();
+    }
+
     public static <T> AsyncTaskBuilder<Void, T> newBasicTask() {
         return newTask();
     }
@@ -22,4 +26,15 @@ public class AsyncTasks {
         return newBasicTask();
     }
 
+    public static <T1, T2> AsyncTaskPool<T1, T2> newPool() {
+        return new AsyncTaskPool<>();
+    }
+
+    public static <T1, T2> AsyncTaskPool<T1, T2> newPool(Class<T1> inputType, Class<T2> outputType) {
+        return new AsyncTaskPool<>();
+    }
+
+    public static AsyncTaskPool newGenericPool() {
+        return new AsyncTaskPool();
+    }
 }

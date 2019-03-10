@@ -1,10 +1,7 @@
 package com.ryansusana.asyncfx
 
-import com.ryansusana.asyncfx.AsyncTasks.newTask
-import org.junit.jupiter.api.BeforeAll
+import com.ryansusana.asyncfx.AsyncTasks.*
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
-import org.testfx.api.FxRobot
 import org.testfx.api.FxToolkit
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -14,14 +11,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class AsyncKotlinTest : FxRobot() {
-
-
-    @BeforeAll
-    internal fun setUp() {
-
-    }
+class AsyncKotlinTest {
 
 
     @Test
@@ -113,14 +103,14 @@ class AsyncKotlinTest : FxRobot() {
     internal fun testAsyncPool() {
         FxToolkit.registerPrimaryStage()
 
-        val asyncTaskPool = AsyncTaskPool<Unit, Unit>()
+        val asyncTaskPool = newGenericPool()
         val atomicInteger = AtomicInteger(0)
         val amountOfTasks = 20
         val durationPerTask = 100L
 
         for (i in 1..amountOfTasks) {
             asyncTaskPool.addTask(
-                    newTask<Unit, Unit>()
+                    newGenericTask()
                             .inBackground {
                                 Thread.sleep(durationPerTask)
                                 atomicInteger.getAndAdd(1)
