@@ -111,15 +111,6 @@ class AsyncKotlinTest {
         val amountOfTasks = 20
         val durationPerTask = 100L
 
-        pool {
-            task {
-            }
-            task {
-            }
-            task {
-
-            }
-        }
 
         for (i in 1..amountOfTasks) {
             asyncTaskPool.addTask(
