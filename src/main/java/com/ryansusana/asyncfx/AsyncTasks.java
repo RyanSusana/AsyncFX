@@ -14,8 +14,8 @@ public class AsyncTasks {
         return new AsyncTaskBuilder<>();
     }
 
-    public static AsyncTaskBuilder newGenericTask() {
-        return new AsyncTaskBuilder();
+    public static AsyncTaskBuilder<Object, Object> newGenericTask() {
+        return new AsyncTaskBuilder<>();
     }
 
     public static <T> AsyncTaskBuilder<Void, T> newBasicTask() {
