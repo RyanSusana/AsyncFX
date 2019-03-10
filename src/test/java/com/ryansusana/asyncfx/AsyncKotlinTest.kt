@@ -1,22 +1,29 @@
 package com.ryansusana.asyncfx
 
+import com.ryansusana.asyncfx.AsyncTasks.newTask
 import javafx.embed.swing.JFXPanel
-import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import java.util.*
+import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AsyncKotlinTest {
 
 
-    @BeforeEach
+    @BeforeAll
     internal fun setUp() {
 
-        JFXPanel()
     }
+
 
     @Test
     internal fun testSyntaxWithComments() {
-        AsyncTasks.newTask<Int, String>()
+        JFXPanel()
+        newTask<Int, String>()
 
                 //Happens before async call and is blocking on the JavaFX thread.
                 .before { println("This will be executed before") }
@@ -43,7 +50,8 @@ class AsyncKotlinTest {
 
     @Test
     internal fun testSyntaxWithoutComments() {
-        AsyncTasks.newTask<Int, String>()
+        JFXPanel()
+        newTask<Int, String>()
                 .before { println("This will be executed before") }
                 .inBackground { inputIntegerArray ->
 
@@ -55,5 +63,45 @@ class AsyncKotlinTest {
                 .after { result -> println("Background process ran in %s".format(result)) }
                 .execute(100, 10)
                 .andWait()
+    }
+
+    @Test
+    internal fun testNonBlocking() {
+        JFXPanel()
+        val atomicBoolean = AtomicBoolean(false)
+
+        newTask<Int, Boolean>()
+                .inBackground {
+                    Thread.sleep(200)
+                    true
+                }
+
+                .after { result ->
+                    atomicBoolean.set(result)
+                }
+
+                .execute()
+
+        assertFalse { atomicBoolean.get() }
+    }
+
+    @Test
+    internal fun testWaitOnResult() {
+        JFXPanel()
+        val atomicBoolean = AtomicBoolean(false)
+
+        newTask<Int, Boolean>()
+                .inBackground {
+                    Thread.sleep(200)
+                    true
+                }
+
+                .after { result ->
+                    atomicBoolean.set(result)
+                }
+                .execute()
+                .andWait()
+
+        assertTrue { atomicBoolean.get() }
     }
 }
