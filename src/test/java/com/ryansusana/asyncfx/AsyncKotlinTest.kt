@@ -1,16 +1,25 @@
 package com.ryansusana.asyncfx
 
+import javafx.embed.swing.JFXPanel
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.util.*
 
 class AsyncKotlinTest {
+
+
+    @BeforeEach
+    internal fun setUp() {
+
+        JFXPanel()
+    }
 
     @Test
     internal fun testSyntaxWithComments() {
         AsyncTasks.newTask<Int, String>()
 
                 //Happens before async call and is blocking on the JavaFX thread.
-                .before { println("This will be  before") }
+                .before { println("This will be executed before") }
 
                 //Happens in a separate non JavaFX Thread, takes input(from .execute(inputParams))
                 .inBackground { inputIntegerArray ->
@@ -35,7 +44,7 @@ class AsyncKotlinTest {
     @Test
     internal fun testSyntaxWithoutComments() {
         AsyncTasks.newTask<Int, String>()
-                .before { println("This will be  before") }
+                .before { println("This will be executed before") }
                 .inBackground { inputIntegerArray ->
 
                     val randomInt = Random().nextInt(inputIntegerArray[0] * inputIntegerArray[1]).toLong()

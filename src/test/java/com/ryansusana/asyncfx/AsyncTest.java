@@ -1,21 +1,24 @@
 package com.ryansusana.asyncfx;
 
 import javafx.embed.swing.JFXPanel;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
 public class AsyncTest {
 
+    @BeforeEach
+    void setUp() {
+        new JFXPanel();
+    }
+
     @Test
     void testSyntax() throws InterruptedException {
-
-        new JFXPanel();
-
         AsyncTasks.newTask(Integer.class, String.class)
 
                 //Happens before async call and is blocking on the JavaFX thread.
-                .before(() -> System.out.println("This will be  before"))
+                .before(() -> System.out.println("This will be executed before"))
 
                 //Happens in a separate non JavaFX Thread, takes input(from .execute(inputParams))
                 .inBackground(inputIntegerArray -> {

@@ -9,7 +9,7 @@ AsyncFX is a library for Java and Kotlin aimed at simplifying the development of
 AsyncTasks.newTask(Integer.class, String.class)
 
 //Happens before async call and is blocking on the JavaFX thread.
-.before(() -> System.out.println("This will be  before"))
+.before(() -> System.out.println("This will be executed before"))
 
 //Happens in a separate non JavaFX Thread, takes input(from .execute(inputParams))
 .inBackground(inputIntegerArray -> {
@@ -38,13 +38,13 @@ AsyncTasks.newTask(Integer.class, String.class)
 AsyncTasks.newTask<Int, String>()
 
 //Happens before async call and is blocking on the JavaFX thread.
-.before { println("This will be  before") }
+.before { println("This will be executed before") }
 
 //Happens in a separate non JavaFX Thread, takes input(from .execute(inputParams))
 .inBackground { inputIntegerArray ->
 
     //inputIntegerArray comes from .execute(Integer... inputIntegerArray) call
-    val randomInt = Random().nextInt(inputIntegerArray[0] * inputIntegerArray[1]).toLong()
+    val randomInt = Random().nextInt(inputIntegerArray[0] * inputIntegerArray[1])
 
     Thread.sleep(randomInt)
     randomInt.toString() + "ms"
