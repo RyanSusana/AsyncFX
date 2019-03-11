@@ -94,7 +94,7 @@ pool {
     for (i in 1..5) {
         basicTask {
             Thread.sleep(i * 100L)
-            atomicInteger.getAndAdd(1)
+            //Intensive task
         }
     }
     
