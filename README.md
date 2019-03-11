@@ -85,7 +85,7 @@ typedTask<Int, String> {
 ```
 
 # Pools
-Pools are an easy way to execute multiple tasks asynchronously.
+In version 0.0.3 Pools were introduced. Pools are an easy way to execute multiple tasks asynchronously.
 
 ```kotlin
 pool {
