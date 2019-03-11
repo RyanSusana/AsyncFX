@@ -90,7 +90,6 @@ In version 0.0.3 Pools were introduced. Pools are an easy way to execute multipl
 ## Pools in Kotlin
 ```kotlin
 pool {
-
     //A basic task is a task with just the inBackground specified.
     for (i in 1..5) {
         basicTask {
