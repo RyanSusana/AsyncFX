@@ -132,12 +132,12 @@ for (int i = 0; i < 20; i++) {
 
             .inBackground(inputIntegerArray -> {
 
-                long randomInt = inputIntegerArray[0] * finalI;
+                long sleepTime = inputIntegerArray[0] * finalI;
 
                 Thread.sleep(randomInt);
-                return randomInt + "ms";
+                return sleepTime + "ms";
             })
-            .after(result -> System.out.println(String.format("Background process ran in %s", result))).create()
+            .after(result -> System.out.println(String.format("Background process ran in %s", result)))
 
     );
 }
