@@ -1,7 +1,6 @@
 package com.ryansusana.asyncfx;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,8 +16,8 @@ public class AsyncTaskPool<T1, T2> {
     }
 
 
-    public AsyncTaskPool<T1, T2> addTask(AsyncTask<T1, T2>... task) {
-        tasksToExecute.addAll(Arrays.asList(task));
+    public AsyncTaskPool<T1, T2> addTask(AsyncTask<T1, T2> task) {
+        tasksToExecute.add(task);
         return this;
     }
 
