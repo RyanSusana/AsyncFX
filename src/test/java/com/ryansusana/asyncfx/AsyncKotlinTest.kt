@@ -1,7 +1,6 @@
 package com.ryansusana.asyncfx
 
-import com.ryansusana.asyncfx.AsyncTasks.newPool
-import com.ryansusana.asyncfx.AsyncTasks.newTypedTask
+import com.ryansusana.asyncfx.AsyncTasks.*
 import org.junit.jupiter.api.Test
 import org.testfx.api.FxToolkit
 import java.util.*
@@ -88,14 +87,10 @@ class AsyncKotlinTest {
         FxToolkit.registerPrimaryStage()
         val atomicBoolean = AtomicBoolean(false)
 
-        newTypedTask<Int, Boolean>()
+        newTask()
                 .inBackground {
                     Thread.sleep(200)
-                    true
-                }
-
-                .after { result ->
-                    atomicBoolean.set(result)
+                    atomicBoolean.set(true)
                 }
                 .execute()
                 .andWait()
