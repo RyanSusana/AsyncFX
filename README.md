@@ -107,7 +107,7 @@ pool {
            //Some intensive task on another non-JavaFX thread
         }
         after {
-            //After the task, executed on the JavaFX
+            //After the task, executed on the JavaFX thread
         }
     }
 }.execute().andWait()
