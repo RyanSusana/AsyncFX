@@ -3,9 +3,7 @@ package com.ryansusana.asyncfx;
 public class AsyncTaskBuilder<T1, T2> {
 
 
-    private During<T1, T2> during = params -> {
-        throw new AsyncException("No background process specified.");
-    };
+    private During<T1, T2> during = null;
     private After<T2> after = params -> {
 
     };
@@ -31,6 +29,9 @@ public class AsyncTaskBuilder<T1, T2> {
 
 
     public AsyncTask<T1, T2> create() {
+        if (during == null) {
+            throw new AsyncException("No background process specified.");
+        }
         return new AsyncTask<T1, T2>() {
             @Override
             public void before() {

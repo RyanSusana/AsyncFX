@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
 
 class AsyncKotlinTest {
@@ -134,6 +135,7 @@ class AsyncKotlinTest {
 
     @Test
     internal fun testCoolSyntax() {
+        FxToolkit.registerPrimaryStage()
 
         val typedTask = typedTask<Int, String> {
             before { println("This will be executed before") }
@@ -146,6 +148,54 @@ class AsyncKotlinTest {
             after { result -> println("Background process ran in %s".format(result)) }
         }
 
-        typedTask.execute().andWait()
+        typedTask.execute(10, 100).andWait()
+    }
+
+    @Test
+    internal fun testPoolCoolSyntax() {
+        FxToolkit.registerPrimaryStage()
+        val atomicInteger = AtomicInteger(0)
+        val pool =
+
+                pool {
+                    basicTask {
+                        Thread.sleep(100)
+                        atomicInteger.getAndAdd(1)
+                    }
+                    basicTask {
+                        Thread.sleep(200)
+                        atomicInteger.getAndAdd(1)
+                    }
+                    basicTask {
+                        Thread.sleep(300)
+                        atomicInteger.getAndAdd(1)
+                    }
+                    task {
+                        before {
+
+                        }
+                        inBackground {
+
+                            Thread.sleep(400)
+                            atomicInteger.getAndAdd(1)
+                        }
+                        after {
+
+                        }
+                    }
+                    typedTask {
+
+                        inBackground {
+                            Thread.sleep(500)
+                            atomicInteger.getAndAdd(1)
+                        }
+                    }
+
+                }.execute()
+        assertNotEquals(3, atomicInteger.get())
+
+        pool.andWaitFor(600, TimeUnit.MILLISECONDS)
+        assertEquals(5, atomicInteger.get())
+
     }
 }

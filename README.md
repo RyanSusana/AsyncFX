@@ -8,7 +8,7 @@ AsyncFX is a library for Java and Kotlin aimed at simplifying the development of
 <dependency>
     <groupId>com.ryansusana.asyncfx</groupId>
     <artifactId>asyncfx</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
 </dependency>
 ```
 # Basic Usage
@@ -81,5 +81,39 @@ typedTask<Int, String> {
         randomInt.toString() + "ms"
     }
     after { result -> println("Background process ran in %s".format(result)) }
+}.execute().andWait()
+```
+
+# Pools
+Pools are an easy way to execute multiple tasks asynchronously.
+
+```kotlin
+pool {
+    basicTask {
+        Thread.sleep(100)
+        //Some intensive task
+    }
+    basicTask {
+        Thread.sleep(200)
+        //Some intensive task
+    }
+    basicTask {
+        Thread.sleep(300)
+        //Some intensive task
+    }
+    task {
+        before {
+
+        }
+        inBackground {
+
+            Thread.sleep(400)
+            
+           //Some intensive task
+        }
+        after {
+
+        }
+    }
 }.execute().andWait()
 ```
