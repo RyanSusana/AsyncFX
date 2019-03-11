@@ -55,7 +55,7 @@ AsyncTasks.newTypedTask<Int, String>()
     //inputIntegerArray comes from .execute(Integer... inputIntegerArray) call
     val randomInt = Random().nextInt(inputIntegerArray[0] * inputIntegerArray[1]).toLong()
 
-    Thread.sleep(randomInt)
+    Thread.sleep(sleepTime)
     randomInt.toString() + "ms"
 }
 
