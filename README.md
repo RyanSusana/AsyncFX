@@ -55,7 +55,7 @@ AsyncTasks.newTypedTask<Int, String>()
     //inputIntegerArray comes from .execute(Integer... inputIntegerArray) call
     val randomInt = Random().nextInt(inputIntegerArray[0] * inputIntegerArray[1]).toLong()
 
-    Thread.sleep(sleepTime)
+    Thread.sleep(randomInt)
     randomInt.toString() + "ms"
 }
 
@@ -134,7 +134,7 @@ for (int i = 0; i < 20; i++) {
 
                 long sleepTime = inputIntegerArray[0] * finalI;
 
-                Thread.sleep(randomInt);
+                Thread.sleep(sleepTime);
                 return sleepTime + "ms";
             })
             .after(result -> System.out.println(String.format("Background process ran in %s", result)))
