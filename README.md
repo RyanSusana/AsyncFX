@@ -89,6 +89,8 @@ Pools are an easy way to execute multiple tasks asynchronously.
 
 ```kotlin
 pool {
+
+    //A basic task is a task with just the inBackground specified.
     basicTask {
         Thread.sleep(100)
         //Some intensive task
