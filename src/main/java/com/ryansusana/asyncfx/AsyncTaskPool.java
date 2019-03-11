@@ -21,6 +21,10 @@ public class AsyncTaskPool<T1, T2> {
         return this;
     }
 
+    public AsyncTaskPool<T1, T2> addTask(AsyncTaskBuilder<T1, T2> task) {
+        return addTask(task.create());
+    }
+
 
     public ExecutedAsyncTask<T1, List<T2>> execute(T1... params) {
         return toTaskBuilder().execute(params);

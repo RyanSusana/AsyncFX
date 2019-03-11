@@ -13,9 +13,13 @@ public final class AsyncTaskPoolBuilder<T1, T2> {
         return new AsyncTaskPoolBuilder<>();
     }
 
-    public AsyncTaskPoolBuilder addTask(AsyncTask<T1, T2> taskToExecute) {
+    public AsyncTaskPoolBuilder<T1, T2> addTask(AsyncTask<T1, T2> taskToExecute) {
         this.tasksToExecute.add(taskToExecute);
         return this;
+    }
+
+    public AsyncTaskPoolBuilder<T1, T2> addTask(AsyncTaskBuilder<T1, T2> task) {
+        return addTask(task.create());
     }
 
 
