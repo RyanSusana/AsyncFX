@@ -94,22 +94,20 @@ pool {
     for (i in 1..5) {
         basicTask {
             Thread.sleep(i * 100L)
-            //Intensive task
+            //Intensive task, executed on a separate non-JavaFX Thread
         }
     }
     
     task {
         before {
-
+            //Before the task, executed on the JavaFX thread
         }
         inBackground {
-
             Thread.sleep(400)
-            
-           //Some intensive task
+           //Some intensive task on another non-JavaFX thread
         }
         after {
-
+            //After the task, executed on the JavaFX
         }
     }
 }.execute().andWait()
