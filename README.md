@@ -92,18 +92,13 @@ In version 0.0.3 Pools were introduced. Pools are an easy way to execute multipl
 pool {
 
     //A basic task is a task with just the inBackground specified.
-    basicTask {
-        Thread.sleep(100)
-        //Some intensive task
+    for (i in 1..5) {
+        basicTask {
+            Thread.sleep(i * 100L)
+            atomicInteger.getAndAdd(1)
+        }
     }
-    basicTask {
-        Thread.sleep(200)
-        //Some intensive task
-    }
-    basicTask {
-        Thread.sleep(300)
-        //Some intensive task
-    }
+    
     task {
         before {
 

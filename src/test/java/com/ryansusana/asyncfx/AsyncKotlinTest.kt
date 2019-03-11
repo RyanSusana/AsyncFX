@@ -150,20 +150,15 @@ class AsyncKotlinTest {
     internal fun testPoolCoolSyntax() {
         FxToolkit.registerPrimaryStage()
         val atomicInteger = AtomicInteger(0)
+
         val pool =
 
                 pool {
-                    basicTask {
-                        Thread.sleep(100)
-                        atomicInteger.getAndAdd(1)
-                    }
-                    basicTask {
-                        Thread.sleep(200)
-                        atomicInteger.getAndAdd(1)
-                    }
-                    basicTask {
-                        Thread.sleep(300)
-                        atomicInteger.getAndAdd(1)
+                    for (i in 1..5) {
+                        basicTask {
+                            Thread.sleep(i * 100L)
+                            atomicInteger.getAndAdd(1)
+                        }
                     }
                     task {
                         before {
@@ -187,10 +182,10 @@ class AsyncKotlinTest {
                     }
 
                 }.execute()
-        assertNotEquals(3, atomicInteger.get())
+        assertNotEquals(7, atomicInteger.get())
 
-        pool.andWaitFor(600, TimeUnit.MILLISECONDS)
-        assertEquals(5, atomicInteger.get())
+        pool.andWaitFor(800, TimeUnit.MILLISECONDS)
+        assertEquals(7, atomicInteger.get())
 
     }
 }
