@@ -87,6 +87,7 @@ typedTask<Int, String> {
 # Pools
 In version 0.0.3 Pools were introduced. Pools are an easy way to execute multiple tasks asynchronously.
 
+## Pools in Kotlin
 ```kotlin
 pool {
 
@@ -118,4 +119,29 @@ pool {
         }
     }
 }.execute().andWait()
+```
+
+## Pools in Java
+```java
+AsyncTaskPool<Integer, String> pool = AsyncTasks.newTypedPool();
+
+for (int i = 0; i < 20; i++) {
+    final int finalI = i;
+    pool.addTask(AsyncTasks.newTypedTask(Integer.class, String.class)
+            .before(() -> System.out.println("This will be executed before"))
+
+            .inBackground(inputIntegerArray -> {
+
+                long randomInt = inputIntegerArray[0] * finalI;
+
+                Thread.sleep(randomInt);
+                return randomInt + "ms";
+            })
+            .after(result -> System.out.println(String.format("Background process ran in %s", result))).create()
+
+    );
+}
+//The 20 goes into the inBackground params
+pool.execute(20).andWait();
+//Each subsequent task will run for 20ms longer than the previous
 ```
