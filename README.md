@@ -1,4 +1,5 @@
 ![Travis Button](https://travis-ci.org/RyanSusana/AsyncFX.svg?branch=master)
+[![codebeat badge](https://codebeat.co/badges/daf90772-501e-482f-889e-f7af48de6fa4)](https://codebeat.co/projects/github-com-ryansusana-asyncfx-master)
 
 # About AsyncFX
 AsyncFX is a library for Java and Kotlin aimed at simplifying the development of asynchronous calls in JavaFX.
